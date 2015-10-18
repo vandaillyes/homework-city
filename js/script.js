@@ -1,47 +1,45 @@
-//Delay your code from executing until all DOM assets have been loaded
+//Delay code from executing until all DOM assets have been loaded.
 $(document).ready(function() {
 
-    // Locate and bind an anonymous function to the form
-    $("#submit-btn").click(function(event){
-      event.preventDefault();// Prevent default action
-      // Get the value of user's input and store it as a variable
-      var city = $("#city-type").val();
-      // Ensure user's input is always treated as a string
-      city = city.toString();
+// Store list of available cities in a variable as an array.
+var city = ["NYC", "SF", "LA", "ATX", "SYD"];
+// Set up a variable for the number of available cities.
+var count = city.length;
+// Set up a variable for the starting point of the loop. (I have found out that quite conveniently, this can also serve as the index number for our array elements.)
+var i = 0;
 
-      // If user inputs a variation of "NY", remove any class already applied and then apply the .nyc class on the body
-      if(city === "New York" || city === "New York City" || city === "NYC") {
-        removeClassAttribute();
-        $("body").addClass("nyc");
-        //Reset the value field
-        $("#city-type").val("");
-      } else if(city == "San Francisco" || city === "Bay Area" || city === "SF") { // If user inputs a variation of "SF", apply the .sf class on the body
-        removeClassAttribute();
-        $("body").addClass("sf");
-        //Reset the value field
-        $("#city-type").val("");
-      } else if(city === "Los Angeles" || city === "LA" || city === "LAX") { // If user inputs a variation of "LA", remove any class already applied and then apply the .la class on the body
-        removeClassAttribute();
-        $("body").addClass("la");
-        //Reset the value field
-        $("#city-type").val("");
-      } else if(city === "Austin" || city === "ATX") { // If user inputs a variation of "Austin", remove any class already applied and then apply the .austin class on the body
-        removeClassAttribute();
-        $("body").addClass("austin");
-        //Reset the value field
-        $("#city-type").val("");
-      } else if(city === "Sydney" || city === "SYD") { // If user inputs a variation of "Sydney", remove any class already applied and then apply the .austin class on the body
-        removeClassAttribute();
-        $("body").addClass("sydney");
-        //Reset the value field
-        $("#city-type").val("");
-      } else { //If user inputs anything other than the specified values (e.g. a random string or nothing), then display a pop-up box
-        alert("Not a valid city name");
-      }
-    });
-    // Remove any class already applied on the body
-    function removeClassAttribute () {
-      $("body").removeAttr("class").attr("class", "");
-    }
+// Start the loop at starting point (0).
+// Define the condition: Run the loop as many times as the number of available cities in our city array.
+// Take the first city in the array and append it to the #city-type drop-down menu as an option.
+// When appended, increment iteration by 1.
+for (0; i < count; i++) {
+  $("#city-type").append(
+  "<option>" +
+    city[i] +
+  "</option>");
+}
+
+// Bind an anonymous function to the form.
+$("#city-type").change(function() {
+  // Get the value of user's choice and store it as a variable.
+  var userChoice = $("#city-type").val();
+  // If the user's choice is NYC, then apply the class "nyc".
+  if (userChoice === "NYC") {
+    $("body").attr("class","nyc");
+  } else if (userChoice === "SF") { // If the user's choice is SF, then apply the class "sf".
+    $("body").attr("class","sf");
+  } else if (userChoice === "LA") { // If the user's choice is LA, then apply the class "la".
+    $("body").attr("class","la");
+  } else if (userChoice === "ATX") { // If the user's choice is ATX, then apply the class "austin".
+    $("body").attr("class","austin");
+  } else if (userChoice === "SYD") { // If the user's choice is SYD, then apply the class "sydney".
+    $("body").attr("class","sydney");
+  } else if (userChoice === "Select a City") { // If the user's choice is to go back to the start, then
+    // remove any class applied on the body,
+    $("body").removeAttr("class").attr("class", "");
+    // and apply the black and white skyline as the background of the body.
+    $("body").attr("background","url(../images/citipix_skyline.jpg) no-repeat center center fixed");
+  }
+});
 
 });
